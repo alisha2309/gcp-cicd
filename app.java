@@ -1,23 +1,10 @@
-package com.example.cloudrun;
+from flask import Flask
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+app = Flask(__name__)
 
-@SpringBootApplication
-public class CloudRunApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(CloudRunApplication.class, args);
-    }
-}
+@app.route("/")
+def hello():
+    return "Hello, Cloud Run!"
 
-@RestController
-@RequestMapping("/api")
-class HelloController {
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "Hello from Cloud Run!";
-    }
-}
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
