@@ -1,14 +1,17 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-slim
+# Use official Python image
+FROM python:3.9-slim
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy the built application JAR
+# Copy application files
 COPY . .
 
-# Expose the application port
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose port 8080
 EXPOSE 8080
 
-# Run the application
-CMD ["java", "-jar", "app.java"]
+# Run the application with Gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
